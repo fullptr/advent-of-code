@@ -1,7 +1,6 @@
-def instructions():
-    with open("day12_input.txt") as f:
-        for line in f:
-            yield line[0], int(line[1:])
+def instructions(data):
+    for line in data.split("\n"):
+        yield line[0], int(line[1:])
 
 def move(pos, direction, value):
     x, y = pos
@@ -20,10 +19,10 @@ def get_direction(rotation):
         270: "W"
     }[rotation]
 
-def part1():
+def part1(data):
     position = (0, 0)
     rotation = 90 # E
-    for action, value in instructions():
+    for action, value in instructions(data):
         if action in {"N", "E", "S", "W"}:
             position = move(position, action, value)
         elif action == "R":
@@ -50,10 +49,10 @@ def move_to_waypoint(position, waypoint, times):
     dx, dy = waypoint
     return (x + times * dx, y + times * dy)
 
-def part2():
+def part2(data):
     position = (0, 0)
     waypoint = (10, 1) # Offset of waypoint in world space coords
-    for action, value in instructions():
+    for action, value in instructions(data):
         if action in {"N", "E", "S", "W"}:
             waypoint = move(waypoint, action, value)
         elif action == "R":
@@ -64,5 +63,5 @@ def part2():
             position = move_to_waypoint(position, waypoint, value)
     return abs(position[0]) + abs(position[1])
 
-print(part1())
-print(part2())
+def main(data):
+    return part1(data), part2(data)

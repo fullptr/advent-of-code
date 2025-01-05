@@ -1,6 +1,5 @@
-def load_board():
-    with open("day11_input.txt") as f:
-        return [[x for x in line.strip()] for line in f]
+def load_board(data):
+    return [[x for x in line.strip()] for line in data.split("\n")]
 
 def neighbour_count_part1(old, row, col):
     neighbour_offsets = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
@@ -61,6 +60,6 @@ def run(initial_board, count_neighbours, tolerance):
                 count += 1
     return count
 
-initial_board = load_board()
-print(run(initial_board, neighbour_count_part1, 4))
-print(run(initial_board, neighbour_count_part2, 5))
+def main(data):
+    initial_board = load_board(data)
+    return run(initial_board, neighbour_count_part1, 4), run(initial_board, neighbour_count_part2, 5)

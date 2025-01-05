@@ -62,8 +62,6 @@ def part2(lines):
 
     return sum(mem.values())
 
-with open("day14_input.txt") as f:
-    lines = f.readlines()
-
-print(part1(lines))
-print(part2(lines))
+def main(data):
+    lines = data.split("\n")
+    return part1(lines), part2(lines)

@@ -21,16 +21,13 @@ def part2(deltas):
     x = (len(s) for s in x if s)
     return prod(funky_fibonacci(i) for i in x)
 
-with open("day10_input.txt") as f:
-    nums = sorted(map(int, f))
+def main(data):
+    nums = sorted(map(int, data.split("\n")))
+    deltas = []
+    delta_counts = defaultdict(int)
+    for prev, curr in zip([0, *nums], nums):
+        deltas.append(curr - prev)
+        delta_counts[curr - prev] += 1
 
-deltas = []
-delta_counts = defaultdict(int)
-for prev, curr in zip([0, *nums], nums):
-    deltas.append(curr - prev)
-    delta_counts[curr - prev] += 1
-
-delta_counts[3] += 1
-
-print(part1(delta_counts))
-print(part2(deltas))
+    delta_counts[3] += 1
+    return part1(delta_counts), part2(deltas)

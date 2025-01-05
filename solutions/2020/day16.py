@@ -1,5 +1,3 @@
-import math
-
 def contains(val, intervals):
     return any(i[0] <= val <= i[1] for i in intervals)
 
@@ -7,25 +5,27 @@ def parse_interval(string):
     a, b = string.split("-")
     return int(a), int(b)
 
-def parse_input():
+def parse_input(data):
     notes = {}
     my_ticket = None
     nearby_tickets = []
     handle_nearby_tickets = False
+    handle_your_ticket = False
 
-    with open("day16_input.txt") as f:
-        for line in f:
-            line = line.strip()
-            if handle_nearby_tickets:
-                nearby_tickets.append([int(x) for x in line.split(",")])
-            elif ": " in line:
-                key, vals = line.split(": ")
-                notes[key] = {parse_interval(intv) for intv in vals.split(" or ")}
-            elif line.startswith("your ticket"):
-                my_ticket = [int(x) for x in next(f).split(",")]
-            elif line.startswith("nearby tickets"):
-                handle_nearby_tickets = True
-
+    for line in data.split("\n"):
+        line = line.strip()
+        if handle_your_ticket:
+            my_ticket = [int(x) for x in line.split(",")]
+            handle_your_ticket = False # done
+        elif handle_nearby_tickets:
+            nearby_tickets.append([int(x) for x in line.split(",")])
+        elif ": " in line:
+            key, vals = line.split(": ")
+            notes[key] = {parse_interval(intv) for intv in vals.split(" or ")}
+        elif line.startswith("your ticket"):
+            handle_your_ticket = True
+        elif line.startswith("nearby tickets"):
+            handle_nearby_tickets = True
 
     return notes, my_ticket, nearby_tickets
 
@@ -74,6 +74,6 @@ def part2(notes, my_ticket, nearby_tickets):
             ret *= my_ticket[field_index]
     return ret
 
-data = parse_input()
-print(part1(*data))
-print(part2(*data))
+def main(data):
+    data = parse_input(data)
+    return part1(*data), part2(*data)

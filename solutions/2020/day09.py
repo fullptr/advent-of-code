@@ -1,6 +1,13 @@
-from day01 import sum_to
 from collections import deque
 
+def sum_to(nums, target, count):
+    if count > 1:
+        for a in nums:
+            if b := sum_to(nums, target - a, count - 1):
+                return a * b
+    elif target in nums:
+        return target
+    
 def part1(nums):
     d = deque()
     it = iter(nums)
@@ -22,8 +29,7 @@ def part2(nums, invalid):
             if sum(subarray) == invalid:
                 return min(subarray) + max(subarray)
 
-with open("day09_input.txt") as f:
-    nums = list(int(x) for x in f)
+def main(data):
+    nums = list(int(x) for x in data.split("\n"))
     invalid = part1(nums)
-    print(invalid)
-    print(part2(nums, invalid))
+    return invalid, part2(nums, invalid)

@@ -39,8 +39,6 @@ def format_line(line):
     op, arg = line.strip().split()
     return [op, int(arg)]
 
-with open("day08_input.txt") as f:
-    code = [format_line(line) for line in f.readlines()]
-
-print(part1(code))
-print(part2(code))
+def main(data):
+    code = [format_line(line) for line in data.split("\n")]
+    return part1(code), part2(code)

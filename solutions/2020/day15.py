@@ -11,6 +11,6 @@ def van_eck(start, n):
 
     return curr_val
 
-
-print(van_eck([9,6,0,10,18,2,1], 2020))
-print(van_eck([9,6,0,10,18,2,1], 30000000))
+def main(data):
+    vals = [int(x) for x in data.split(",")]
+    return van_eck(vals, 2020), van_eck(vals, 30000000)
