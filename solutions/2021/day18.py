@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field, replace
+from dataclasses import dataclass
 from typing import Union
 from itertools import combinations
 from copy import deepcopy
@@ -127,14 +127,16 @@ def magnitude(node: Node | int):
         return node
     return 3 * magnitude(node.lhs) + 2 * magnitude(node.rhs)
 
-def get_numbers():
-    with open("day18_input.txt") as f:
-        return [from_string(l.strip()) for l in f]
+def get_numbers(data):
+    return [from_string(l.strip()) for l in data.split("\n")]
 
-total, *rest = get_numbers()
-for num in rest:
-    total += num
-print("Part 1:", magnitude(total))
+def main(data):
+    total, *rest = get_numbers(data)
+    for num in rest:
+        total += num
+    part1 = magnitude(total)
 
-numbers = get_numbers()
-print("Part 2:", max(max(magnitude(a + b), magnitude(b + a)) for a, b in combinations(numbers, 2)))
+    numbers = get_numbers(data)
+    part2 = max(max(magnitude(a + b), magnitude(b + a)) for a, b in combinations(numbers, 2))
+    
+    return part1, part2

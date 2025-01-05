@@ -1,9 +1,8 @@
 from collections import Counter
 import re
-def parse_input():
-    with open("day05_input.txt") as f:
-        for line in f:
-            yield tuple(int(n) for n in re.findall(r"\d+", line))
+def parse_input(data):
+    for line in data.split("\n"):
+        yield tuple(int(n) for n in re.findall(r"\d+", line))
 
 def walk_line(x1, y1, x2, y2, inc_diag):
     if x1 == x2:
@@ -16,9 +15,9 @@ def walk_line(x1, y1, x2, y2, inc_diag):
         return zip(x_coords, y_coords)
     return []
 
-def count_overlaps(inc_diag):
-    points = Counter(p for x in parse_input() for p in walk_line(*x, inc_diag))
+def count_overlaps(data, inc_diag):
+    points = Counter(p for x in parse_input(data) for p in walk_line(*x, inc_diag))
     return sum(1 for v in points.values() if v > 1)
 
-print("Part 1:", count_overlaps(inc_diag=False))
-print("Part 2:", count_overlaps(inc_diag=True))
+def main(data):
+    return count_overlaps(data, inc_diag=False), count_overlaps(data, inc_diag=True)

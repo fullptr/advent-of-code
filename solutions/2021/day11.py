@@ -1,6 +1,4 @@
 import itertools
-with open("day11_input.txt") as f:
-    data = [list(int(n) for n in l.strip()) for l in f]
 
 def loop_board(board):
     for j, row in enumerate(board):
@@ -38,9 +36,12 @@ def step(board):
 
     return len(flashed)
 
-print("Part 1:", sum(step(data) for _ in range(100)))
-steps = 100
-while len(set(n for line in data for n in line)) != 1:
-    step(data)
-    steps += 1
-print("Part 2:", steps)
+def main(data):
+    data = [list(int(n) for n in l.strip()) for l in data.split("\n")]
+    
+    part1 = sum(step(data) for _ in range(100))
+    steps = 100
+    while len(set(n for line in data for n in line)) != 1:
+        step(data)
+        steps += 1
+    return part1, steps

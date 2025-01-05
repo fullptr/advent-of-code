@@ -1,9 +1,8 @@
-def parse_input():
-    with open("day08_input.txt") as f:
-        for line in f:
-            data = line.strip()
-            signal, output = data.split(" | ")
-            yield [frozenset(x) for x in signal.split()], [frozenset(x) for x in output.split()]
+def parse_input(data):
+    for line in data.split("\n"):
+        data = line.strip()
+        signal, output = data.split(" | ")
+        yield [frozenset(x) for x in signal.split()], [frozenset(x) for x in output.split()]
 
 def solve_line(signal, output):
     n = {}
@@ -31,5 +30,8 @@ def solve_line(signal, output):
     lookup = {v: k for k, v in n.items()}
     return sum(10 ** power * lookup[num] for power, num in enumerate(reversed(output)))
 
-print("Part 1:", sum(1 for _, x in parse_input() for y in x if len(y) in {2, 3, 4, 7}))
-print("Part 2:", sum(solve_line(s, o) for s, o in parse_input()))
+def main(data):
+    return (
+        sum(1 for _, x in parse_input(data) for y in x if len(y) in {2, 3, 4, 7}),
+        sum(solve_line(s, o) for s, o in parse_input(data))
+    )

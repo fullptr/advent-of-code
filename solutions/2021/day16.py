@@ -79,8 +79,6 @@ def parse(data):
 def version_sum(root: Packet):
     return root.version + sum(version_sum(node) for node in root.subpackets)
 
-with open("day16_input.txt") as f:
-    data = parse(f.read().strip())
-
-print("Part 1:", version_sum(data))
-print("Part 2:", data.value)
+def main(data):
+    data = parse(data)
+    return version_sum(data), data.value
