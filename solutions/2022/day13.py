@@ -1,6 +1,4 @@
 import json
-with open("day13_input.txt") as f:
-    data = f.read()
 
 def compare(lhs, rhs, indent = 0):
     #print(f"{' '*indent}- Compare {lhs} vs {rhs}")
@@ -32,34 +30,30 @@ def compare(lhs, rhs, indent = 0):
                 return True
             return None
 
-packets = []
+def main(data):
+    packets = []
 
-part1 = 0
-for idx, pair in enumerate(data.split("\n\n"), 1):
-    a, b = pair.split("\n")
-    #print(f"== Pair {idx} ==")
-    A = json.loads(a)
-    B = json.loads(b)
-    if compare(A, B):
-        part1 += idx
-    packets.append(A)
-    packets.append(B)
-    #print()
+    part1 = 0
+    for idx, pair in enumerate(data.split("\n\n"), 1):
+        a, b = pair.split("\n")
+        A = json.loads(a)
+        B = json.loads(b)
+        if compare(A, B):
+            part1 += idx
+        packets.append(A)
+        packets.append(B)
 
-print(f"Part 1: {part1}")
+    div1 = [[2]]
+    div2 = [[6]]
+    div1_less = 1 # start at index 1
+    div2_less = 2 # start at index 1, +1 extra to compare against [[2]]
+    for packet in packets:
+        if compare(packet, div1):
+            div1_less += 1
+        if compare(packet, div2):
+            div2_less += 1
 
-div1 = [[2]]
-div2 = [[6]]
-div1_less = 1 # start at index 1
-div2_less = 2 # start at index 1, +1 extra to compare against [[2]]
-for packet in packets:
-    if compare(packet, div1):
-        div1_less += 1
-    if compare(packet, div2):
-        div2_less += 1
-
-print(f"Part 2: {div1_less * div2_less}")
-
+    return part1, div1_less * div2_less
     
 
 

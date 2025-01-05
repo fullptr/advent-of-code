@@ -1,8 +1,6 @@
 import parse
 import math
 from dataclasses import dataclass, field
-with open("day11_input.txt") as f:
-    data = f.read()
 
 monkey_match = """Monkey {num}:
   Starting items: {items}
@@ -13,7 +11,7 @@ monkey_match = """Monkey {num}:
 
 @dataclass
 class Monkey:
-    items: field(default_factory=list)
+    items: list[int]
     formula: str
     test: int
     if_true: int
@@ -27,7 +25,7 @@ def apply_formula(formula: str, old: int) -> int:
         return old * old
     return old * int(formula.removeprefix("* "))
 
-def get_monkeys() -> list[Monkey]:
+def get_monkeys(data) -> list[Monkey]:
     monkeys: list[Monkey] = []
     for monkey_data in data.split("\n\n"):
         matcher = parse.search(monkey_match, monkey_data)
@@ -52,11 +50,14 @@ def run_sim(monkeys: list[Monkey], iterations: int, relief_func):
                 monkeys[throw_to].items.append(item)
             m.items = []
     *_, a, b = sorted(monkeys, key=lambda m: m.num_inspects)
-    print(a.num_inspects * b.num_inspects)
+    return a.num_inspects * b.num_inspects
 
-monkeys = get_monkeys()
-run_sim(monkeys, 20, lambda x: x // 3)
+def main(data):
+    monkeys = get_monkeys(data)
+    part1 = run_sim(monkeys, 20, lambda x: x // 3)
 
-monkeys = get_monkeys()
-factor = math.prod(m.test for m in monkeys)
-run_sim(monkeys, 10000, lambda x: x % factor)
+    monkeys = get_monkeys(data)
+    factor = math.prod(m.test for m in monkeys)
+    part2 = run_sim(monkeys, 10000, lambda x: x % factor)
+    
+    return part1, part2
