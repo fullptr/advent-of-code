@@ -3,7 +3,7 @@ from itertools import combinations
 import util
 
 def main(data):
-    print(data)
+    data = data.split("\n")
     width = len(data[0])
     height = len(data)
         
@@ -41,6 +41,4 @@ def main(data):
             part1 |= set(get_antinodes_part1(a1, a2))
             part2 |= set(get_antinodes_part2(a1, a2))
             
-    print(len(part1))
-    print(len(part2))
     return len(part1), len(part2)
