@@ -1,9 +1,6 @@
 from dataclasses import dataclass
-from itertools import pairwise
-with open("day09_input.txt") as f:
-    data = f.readlines()
 
-def steps():
+def steps(data):
     for line in data:
         direction, distance = line.strip().split()
         yield direction, int(distance)
@@ -27,11 +24,11 @@ def tail_movement(offset: Vec2) -> Vec2:
         offset.y //= 2
     return offset
 
-def run(snek_length):
+def run(data, snek_length):
     snek = [Vec2(0, 0) for _ in range(snek_length)]
     visited = set()
 
-    for direction, distance in steps():
+    for direction, distance in steps(data):
         for _ in range(distance):
             # Update head
             match direction:
@@ -52,5 +49,6 @@ def run(snek_length):
 
     return len(visited)
 
-print(run(2))
-print(run(10))
+def main(data):
+    data = data.split("\n")
+    return run(data, 2), run(data, 10)

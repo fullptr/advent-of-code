@@ -1,5 +1,3 @@
-with open("day02_input.txt") as f:
-    lines = f.readlines()
 
 wins = {"A": "B", "B": "C", "C": "A"} # value beats key
 loses = {v: k for k, v in wins.items()} # key beats value
@@ -13,17 +11,18 @@ def game(l, r): # l and r are both in {A, B, C}
         return scores[r] + 3
     return scores[r]
 
-total1 = 0
-total2 = 0
-for line in lines:
-    l, r = line.split()
-    total1 += game(l, p1map[r])
-    if r == "X":
-        total2 += game(l, loses[l])
-    elif r == "Y":
-        total2 += game(l, l)
-    else:
-        total2 += game(l, wins[l])
+def main(data):
+    lines = data.split("\n")
+    total1 = 0
+    total2 = 0
+    for line in lines:
+        l, r = line.split()
+        total1 += game(l, p1map[r])
+        if r == "X":
+            total2 += game(l, loses[l])
+        elif r == "Y":
+            total2 += game(l, l)
+        else:
+            total2 += game(l, wins[l])
 
-print(total1)
-print(total2)
+    return total1, total2
