@@ -1,4 +1,4 @@
-from itertools import pairwise
+from itertools import pairwise, batched
 from collections import Counter
 
 def is_nice_p1(string):

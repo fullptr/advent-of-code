@@ -1,4 +1,14 @@
 from dataclasses import dataclass
+from itertools import islice
+
+def sliding(seq, n=2):
+    it = iter(seq)
+    result = tuple(islice(it, n))
+    if len(result) == n:
+        yield result
+    for elem in it:
+        result = result[1:] + (elem,)
+        yield result
     
 @dataclass(frozen=True)
 class Vec2:
