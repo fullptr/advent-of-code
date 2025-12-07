@@ -1,17 +1,3 @@
-def advance(val, diff, sign):
-    wraps = 0
-    if sign == "L":
-        new_val = val - diff
-        while new_val < 0:
-            new_val += 100
-            wraps += 1
-    else:
-        new_val = val + diff
-        while new_val >= 100:
-            new_val -= 100
-            wraps += 1
-    return new_val, wraps
-
 def main(data):
     val = 50
     count1 = count2 = 0
