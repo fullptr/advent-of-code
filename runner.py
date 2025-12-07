@@ -18,5 +18,5 @@ for path in pathlib.Path("solutions").glob("**/*.py"):
             input_file = pathlib.Path("inputs") / year / f"{day}.txt"
             with input_file.open() as f:
                 data = f.read()
-            part1, part2 = module.main(data.strip())
+            part1, part2 = module.main(data)
             print(f"{year}/{day}:\n    1) {part1}\n    2) {part2}")

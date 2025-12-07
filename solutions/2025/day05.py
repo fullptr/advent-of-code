@@ -34,8 +34,7 @@ def main(data):
         if check_is_fresh(ingredient, ranges):
             part1 += 1
             
-    merged_ranges = merge_ranges(ranges)
     part2 = 0
-    for a, b in merged_ranges:
+    for a, b in merge_ranges(ranges):
         part2 += b - a + 1
     return part1, part2
