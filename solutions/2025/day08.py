@@ -25,19 +25,19 @@ def main(data):
         x, y, z = [int(a) for a in line.split(",")]
         points.append(Point(x, y, z))
         
-    edges = list(combinations(points, 2))
-    edges = sorted(edges, key=length2)
+    edges = sorted(combinations(points, 2), key=length2)
 
-    c = {p: frozenset([p]) for p in points}
+    # point -> set of reachable points
+    graph = {p: frozenset([p]) for p in points}
         
     part1 = part2 = None
     for i, (a, b) in enumerate(edges):
-        add_edge(c, (a, b))
+        add_edge(graph, (a, b))
         
         if i == 1000 - 1:
-            circuits = sorted(set(c.values()), key=len, reverse=True)
+            circuits = sorted(set(graph.values()), key=len, reverse=True)
             part1 = math.prod(len(x) for x in circuits[:3])
-        if len(c[a]) == len(points): # we are done
+        if len(graph[a]) == len(points): # we are done
             part2 = a.x * b.x
             break
     
